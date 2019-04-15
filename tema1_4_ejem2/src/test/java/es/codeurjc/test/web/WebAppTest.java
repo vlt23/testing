@@ -1,9 +1,6 @@
 package es.codeurjc.test.web;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.net.MalformedURLException;
-
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -11,55 +8,54 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class WebAppTest {
 
-	private WebDriver driver;
+    private WebDriver driver;
 
-	@BeforeClass
-	public static void setupClass() {
-		WebDriverManager.chromedriver().setup();
-		WebApp.start();
-	}
-	
-	@AfterClass
-	public static void teardownClass() {
-		WebApp.stop();
-	}
+    @BeforeClass
+    public static void setupClass() {
+        WebDriverManager.firefoxdriver().setup();
+        WebApp.start();
+    }
 
-	@Before
-	public void setupTest() throws MalformedURLException {
-        driver = new ChromeDriver();
-	}
+    @AfterClass
+    public static void teardownClass() {
+        WebApp.stop();
+    }
 
-	@After
-	public void teardown() {
-		if (driver != null) {
-			driver.quit();
-		}
-	}
+    @Before
+    public void setupTest() {
+        driver = new FirefoxDriver();
+    }
 
-	@Test
-	public void test() {
-		
-		driver.get("http://localhost:8080/");
+    @After
+    public void teardown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
-		String newTitle = "MessageTitle";
-		String newBody = "MessageBody";
+    @Test
+    public void test() {
+        driver.get("http://localhost:8080/");
 
-		driver.findElement(By.id("title-input")).sendKeys(newTitle);
-		driver.findElement(By.id("body-input")).sendKeys(newBody);
+        String newTitle = "MessageTitle";
+        String newBody = "MessageBody";
 
-		driver.findElement(By.id("submit")).click();
+        driver.findElement(By.id("title-input")).sendKeys(newTitle);
+        driver.findElement(By.id("body-input")).sendKeys(newBody);
 
-		String title = driver.findElement(By.id("title")).getText();
-		String body = driver.findElement(By.id("body")).getText();
+        driver.findElement(By.id("submit")).click();
 
-		assertThat(title).isEqualTo(newTitle);
-		assertThat(body).isEqualTo(newBody);
-	}
+        String title = driver.findElement(By.id("title")).getText();
+        String body = driver.findElement(By.id("body")).getText();
+
+        assertThat(title).isEqualTo(newTitle);
+        assertThat(body).isEqualTo(newBody);
+    }
 
 }
