@@ -7,25 +7,25 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class WebApp {
 
-	private static ConfigurableApplicationContext app;
-	
-    public static void main(String[] args) throws Exception {
+    private static ConfigurableApplicationContext app;
+
+    public static void main(String[] args) {
         SpringApplication.run(WebApp.class, args);
     }
-    
+
     public static void start() {
-    	start(new String[] {});
+        start(new String[]{});
     }
 
-	private static void start(String[] args) {
-		if(app == null) {
-    		app = SpringApplication.run(WebApp.class, args);
-    	} 
-	}    
-	
-	public static void stop() {
-		if(app != null) {
-			app.close();
-		}
-	}
+    private static void start(String[] args) {
+        if (app == null) {
+            app = SpringApplication.run(WebApp.class, args);
+        }
+    }
+
+    public static void stop() {
+        if (app != null) {
+            app.close();
+        }
+    }
 }

@@ -26,6 +26,8 @@ public class WebAppTest {
     @BeforeClass
     public static void setupClass() {
 
+        WebApp.start();
+
         String sutHost = System.getenv("ET_SUT_HOST");
         if (sutHost == null) {
             sutURL = "http://localhost:8080/";
@@ -57,6 +59,8 @@ public class WebAppTest {
         if (driver != null) {
             driver.quit();
         }
+
+        WebApp.stop();
     }
 
     @Test
